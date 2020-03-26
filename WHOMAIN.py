@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QTableWidget,QFrame,QAbstractItemView, QTableWidgetI
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
-from good2 import Ui_MainWindow
+from WHOUI import Ui_MainWindow
 
 
 import sys

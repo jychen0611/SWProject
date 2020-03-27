@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'good.ui'
+# Form implementation generated from reading ui file 'WHO.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         self.pushButton.setAutoDefault(False)
         self.pushButton.setObjectName("pushButton")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(480, 250, 691, 421))
+        self.label.setGeometry(QtCore.QRect(520, 610, 661, 241))
         self.label.setObjectName("label")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(20, 60, 121, 31))
@@ -39,12 +39,12 @@ class Ui_MainWindow(object):
         self.pushButton_2.setGeometry(QtCore.QRect(20, 620, 201, 81))
         self.pushButton_2.setObjectName("pushButton_2")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(0, 101, 421, 481))
+        self.tableWidget.setGeometry(QtCore.QRect(0, 101, 1191, 481))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(1010, 140, 191, 61))
+        self.pushButton_3.setGeometry(QtCore.QRect(30, 730, 191, 61))
         self.pushButton_3.setObjectName("pushButton_3")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)

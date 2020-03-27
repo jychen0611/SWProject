@@ -4,12 +4,18 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from WHOUI import Ui_MainWindow
-
-
+import json
 import sys
 import random
 number=0
 class MainWindow(QtWidgets.QMainWindow):
+
+    """
+    #讀取Json檔
+    with open('D:\PYQT\COVID-19\Countries.json',mode='r') as file:
+        data=json.load(file)
+    print(data)
+    """
     def __init__(self):
         super(MainWindow,self).__init__()
         self.ui = Ui_MainWindow()
@@ -26,7 +32,7 @@ class MainWindow(QtWidgets.QMainWindow):
         palette=QtGui.QPalette()
         palette.setBrush(self.backgroundRole(),QtGui.QColor(80,150,210))#RGB
         self.setPalette(palette)
-        #設定字體
+
 
 
         #設定選項(離開)
@@ -44,29 +50,64 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.font = QFont('標楷體', 20)
         self.ui.font.setBold(True)  # 设置字体加粗
 
-        self.ui.tableWidget.setColumnCount(3)
-        self.ui.tableWidget.setRowCount(100)
-        self.ui.tableWidget.setHorizontalHeaderLabels(['國家', '感染人數', '死亡人數'])  # 设置表头文字
+        self.ui.tableWidget.setColumnCount(10)
+        self.ui.tableWidget.setRowCount(200)
+        self.ui.tableWidget.setHorizontalHeaderLabels(['國家', '感染人數', '死亡人數','痊癒人數','感染新增','死亡新增','Active cases','重症','',''])  # 设置表头文字
         self.ui.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
 
-        self.ui.tableWidget.setItem(0, 0, QTableWidgetItem("China"))
-        self.ui.tableWidget.setItem(1, 0, QTableWidgetItem("Italy"))
-        self.ui.tableWidget.setItem(2, 0, QTableWidgetItem("United States of America"))
-        self.ui.tableWidget.setItem(3, 0, QTableWidgetItem("Spain"))
-        self.ui.tableWidget.setItem(4, 0, QTableWidgetItem("Germany"))
+        # 讀取Txt檔
+        a=0
+        with open('D:\PYQT\Countries.txt', 'r', encoding='utf-8') as file:
+            for countries in file:
+                self.ui.tableWidget.setItem(a, 0, QTableWidgetItem(countries))
+                a=a+1
+        b=0
+        with open('D:\PYQT\TotalCases.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 1, QTableWidgetItem(TotalCases))
+                b=b+1
+        c = 0
+        with open('D:\PYQT\TotalDeaths.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(c, 2, QTableWidgetItem(TotalCases))
+                c = c + 1
+        b = 0
+        with open('D:\PYQT\TotalRecovered.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 3, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/NewCases.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 4, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/NewDeaths.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 5, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/ActiveCases.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 6, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/SeriousCritical.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 7, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/TotCases1M.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 8, QTableWidgetItem(TotalCases))
+                b = b + 1
+        b = 0
+        with open('D:/PYQT/TotDeaths1M.txt', 'r', encoding='utf-8') as file:
+            for TotalCases in file:
+                self.ui.tableWidget.setItem(b, 9, QTableWidgetItem(TotalCases))
+                b = b + 1
 
 
-        self.ui.tableWidget.setItem(0, 1, QTableWidgetItem("81,869"))
-        self.ui.tableWidget.setItem(1, 1, QTableWidgetItem("69,176"))
-        self.ui.tableWidget.setItem(2, 1, QTableWidgetItem("51,914"))
-        self.ui.tableWidget.setItem(3, 1, QTableWidgetItem("39,673"))
-        self.ui.tableWidget.setItem(4, 1, QTableWidgetItem("31,554"))
-
-        self.ui.tableWidget.setItem(0, 2, QTableWidgetItem("81,869"))
-        self.ui.tableWidget.setItem(1, 2, QTableWidgetItem("6,820"))
-        self.ui.tableWidget.setItem(2, 2, QTableWidgetItem("673"))
-        self.ui.tableWidget.setItem(3, 2, QTableWidgetItem("2,696"))
-        self.ui.tableWidget.setItem(4, 2, QTableWidgetItem("149"))
 
         # 設定字大小
         self.ui.label.setFont(QtGui.QFont('標楷體',30))

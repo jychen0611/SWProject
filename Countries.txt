@@ -1,0 +1,200 @@
+China
+USA
+Italy
+Spain
+Germany
+Iran
+France
+Switzerland
+UK
+S. Korea
+Netherlands
+Austria
+Belgium
+Canada
+Turkey
+Portugal
+Norway
+Australia
+Israel
+Brazil
+Sweden
+Malaysia
+Czechia
+Denmark
+Ireland
+Luxembourg
+Ecuador
+Japan
+Chile
+Romania
+Pakistan
+Poland
+Thailand
+Indonesia
+Finland
+Russia
+Saudi Arabia
+South Africa
+Greece
+Philippines
+Iceland
+India
+Diamond Princess
+Singapore
+Panama
+Slovenia
+Argentina
+Mexico
+Peru
+Estonia
+Croatia
+Qatar
+Hong Kong
+Egypt
+Colombia
+Dominican Republic
+Bahrain
+Iraq
+Serbia
+Lebanon
+New Zealand
+Algeria
+Lithuania
+UAE
+Armenia
+Hungary
+Latvia
+Bulgaria
+Morocco
+Slovakia
+Andorra
+Taiwan
+Uruguay
+Costa Rica
+Bosnia and Herzegovina
+Tunisia
+Ukraine
+Kuwait
+North Macedonia
+Jordan
+San Marino
+Albania
+Moldova
+Vietnam
+Burkina Faso
+Cyprus
+Faeroe Islands
+Malta
+Ghana
+Réunion
+Oman
+Kazakhstan
+Azerbaijan
+Senegal
+Brunei 
+Venezuela
+Sri Lanka
+Cambodia
+Ivory Coast
+Afghanistan
+Belarus
+Palestine
+Cameroon
+Uzbekistan
+Mauritius
+Martinique
+Georgia
+Guadeloupe
+Montenegro
+Honduras
+Cuba
+Channel Islands
+Nigeria
+Trinidad and Tobago
+Bolivia
+Kyrgyzstan
+Liechtenstein
+Paraguay
+DRC
+Mayotte
+Rwanda
+Bangladesh
+Gibraltar
+Macao
+Monaco
+Kenya
+French Polynesia
+Isle of Man
+Aruba
+French Guiana
+Jamaica
+Guatemala
+Togo
+Barbados
+Madagascar
+Uganda
+Ethiopia
+Zambia
+Bermuda
+New Caledonia
+Maldives
+El Salvador
+Tanzania
+Djibouti
+Equatorial Guinea
+Dominica
+Mali
+Mongolia
+Saint Martin
+Niger
+Bahamas
+Greenland
+Cayman Islands
+Guinea
+Haiti
+Namibia
+Suriname
+Curaçao
+Gabon
+Antigua and Barbuda
+Grenada
+Mozambique
+Seychelles
+Benin
+Eritrea
+Laos
+Eswatini
+Cabo Verde
+Guyana
+Zimbabwe
+Fiji
+Montserrat
+Myanmar
+Syria
+Angola
+Congo
+Vatican City
+Gambia
+Sudan
+Nepal
+Bhutan
+CAR
+Chad
+Liberia
+Mauritania
+St. Barth
+Saint Lucia
+Sint Maarten
+Somalia
+Nicaragua
+Anguilla
+Belize
+British Virgin Islands
+Guinea-Bissau
+Saint Kitts and Nevis
+Turks and Caicos
+Libya
+Papua New Guinea
+St. Vincent Grenadines
+Timor-Leste

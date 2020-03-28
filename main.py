@@ -3,19 +3,32 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import sys
 from TitleTableView.TitleTable import TitleTableWindow
-
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QUrl
 from startupView.startup import startupWindow
 from articleContentView.articleContent import articleContentWindow
 
 
 class ViewController:
-    def loadArticleContent(self,list):
+    def loadArticleContent(self,dictory):
         self.articleContentWindow= articleContentWindow()
         self.articleContentWindow.goBackToTitleTableSignal.connect(self.loadTitleTable)
         self.articleContentWindow.show()
-        self.articleContentWindow.label_title.setText(list[0])
-        self.articleContentWindow.textBrowser.setHtml(list[1])
+        self.articleContentWindow.label_title.setText(dictory['article_title'])
+        #self.articleContentWindow.label_good.setText(dictory['good'])
+        self.articleContentWindow.label_boo.setText(str(dictory['boo']))
+        self.articleContentWindow.label_date.setText(dictory['date'])
+        url='<a href=\"'+dictory['url'] + '\"> ' + dictory['url'] + '</a>'
+        print(url)
+        self.articleContentWindow.label_url.setText(url)
+        self.articleContentWindow.label_url.linkActivated.connect(self.link)
+        #self.articleContentWindow.label_url .setText('<a href="http://stackoverflow.com/">Stackoverflow/</a>')
+        self.articleContentWindow.label_author.setText(dictory['author'])
+        self.articleContentWindow.textBrowser.setHtml(dictory['content'])
 
+
+    def link(self, linkStr):
+        QDesktopServices.openUrl(QUrl(linkStr))
     def loadTitleTable(self):
         self.TitleTableWindow=TitleTableWindow()
 

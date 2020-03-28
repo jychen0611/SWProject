@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>484</width>
-    <height>387</height>
+    <width>1200</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,53 +17,77 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>100</x>
       <y>60</y>
-      <width>151</width>
-      <height>131</height>
+      <width>450</width>
+      <height>350</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>3ds Light</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>other</string>
+     <string>PTT</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>650</x>
       <y>60</y>
-      <width>151</width>
-      <height>131</height>
+      <width>450</width>
+      <height>350</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>3ds Light</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>文章</string>
+     <string>BBC</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>210</y>
-      <width>151</width>
-      <height>131</height>
+      <x>100</x>
+      <y>449</y>
+      <width>451</width>
+      <height>351</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>3ds Light</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>WHO</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>210</y>
-      <width>151</width>
-      <height>131</height>
+      <x>650</x>
+      <y>449</y>
+      <width>451</width>
+      <height>351</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>3ds Light</family>
+      <pointsize>36</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>桃機異動航班</string>
     </property>
    </widget>
   </widget>
@@ -72,7 +96,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>484</width>
+     <width>1200</width>
      <height>18</height>
     </rect>
    </property>

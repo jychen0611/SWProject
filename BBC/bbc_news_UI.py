@@ -8,12 +8,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import json, pathlib
 
 ##### My Code #####
-import urllib.request
-import pathlib
-
 class MyGroupBox(QtWidgets.QGroupBox):
     class MyLabel(QtWidgets.QLabel):
         def __init__(self, *args, **kwargs):
@@ -37,8 +34,8 @@ class MyGroupBox(QtWidgets.QGroupBox):
         self.mousePressEvent = self.Clicked_Label
         self.picture = QtWidgets.QLabel()
 
-        if len(title) > 16:
-            title = title[:16] + "..."
+        if len(title) > 12:
+            title = title[:12] + "..."
         self.title = self.createMyLabel(title)
         self.title.mousePressEvent = self.Clicked_Label
 
@@ -46,15 +43,9 @@ class MyGroupBox(QtWidgets.QGroupBox):
         self.picture.setScaledContents(True)
 
         # set Picture
-        image = None
-        if self.picture_link not in Ui_MainWindow.webImage:
-            data = urllib.request.urlopen(self.picture_link).read()
-            image = QtGui.QImage()
-            image.loadFromData(data)
-            Ui_MainWindow.webImage[self.picture_link] = image
-        else:
-            image = Ui_MainWindow.webImage[self.picture_link]
-        self.picture.setPixmap(QtGui.QPixmap(image.smoothScaled(400, 300)))  # set picture size to 400*300
+        if self.picture_link not in Ui_MainWindow.webImageDict:
+            Ui_MainWindow.webImageDict[self.picture_link] = QtGui.QPixmap(QtGui.QImage(Ui_MainWindow.curPath + self.picture_link[1:]).smoothScaled(300,225))
+        self.picture.setPixmap(Ui_MainWindow.webImageDict[self.picture_link])
 
         # set title style
         font = QtGui.QFont()
@@ -76,28 +67,28 @@ class MyGroupBox(QtWidgets.QGroupBox):
 ####################
 
 class Ui_MainWindow(object):
-    webImage = {}
+    webImageDict = {}
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(1600, 1200)
+        MainWindow.setFixedSize(1200, 900)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.scrollArea_mainTable = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea_mainTable.setGeometry(QtCore.QRect(0, 200, 1600, 1000))
+        self.scrollArea_mainTable.setGeometry(QtCore.QRect(0, 150, 1200, 750))
         self.scrollArea_mainTable.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.gridLayout = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.scrollArea_mainTable.setObjectName("scrollArea_mainTable")
         self.scrollArea_mainTable.setWidget(self.scrollAreaWidgetContents)
         self.label_bbc_logo = QtWidgets.QLabel(self.centralwidget)
-        self.label_bbc_logo.setGeometry(QtCore.QRect(0, 0, 800, 100))
+        self.label_bbc_logo.setGeometry(QtCore.QRect(0, 0, 600, 75))
         self.label_bbc_logo.setObjectName("label_bbc_logo")
         self.label_bbc_red_bar = QtWidgets.QLabel(self.centralwidget)
-        self.label_bbc_red_bar.setGeometry(QtCore.QRect(0, 100, 1600, 100))
+        self.label_bbc_red_bar.setGeometry(QtCore.QRect(0, 75, 1200, 75))
         self.label_bbc_red_bar.setObjectName("label_bbc_red_bar")
         self.pushButton_go_back = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_go_back.setGeometry(QtCore.QRect(1200, 50, 400, 50))
+        self.pushButton_go_back.setGeometry(QtCore.QRect(900, 25, 300, 50))
         self.pushButton_go_back.setObjectName("pushButton_go_back")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -108,57 +99,45 @@ class Ui_MainWindow(object):
         self.label_bbc_logo.mousePressEvent = self.Clicked_label_bbc_logo
         self.label_bbc_red_bar.setPixmap(QtGui.QPixmap(self.curPath+'/src/NEWS_Chinese.png'))   # set while BBC logo
         self.label_bbc_red_bar.mousePressEvent = self.Clicked_label_bbc_red_bar
-
-        self.test = 0
-        self.PreLoad()
         ####################
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     ##### My Code #####
-    def UpdateNews(self):
+    def UpdateNews(self, returnData):
         # clear all object in news table
         for i in reversed(range(self.gridLayout.count())):
             self.gridLayout.itemAt(i).widget().deleteLater()
 
-        returnData = self.WebCrawer()
         i=0
         for key, values in returnData.items():
             title = key
             picture_link = values[0]
             news_url = values[1]
             self.gridLayout.addWidget(MyGroupBox(title, picture_link, news_url), i//3, i%3)
+            print("News ", i, "created!")
             i += 1
 
     def PreLoad(self):
-        returnData = self.WebCrawer()
-        for key, values in returnData.items():
-            data = urllib.request.urlopen(values[0]).read()
-            image = QtGui.QImage()
-            image.loadFromData(data)
-            Ui_MainWindow.webImage[values[0]] = image
+        with open(self.curPath+'/src/data.json', 'r') as f:
+            returnData = json.load(f)
 
-    def WebCrawer(self):
-        # do something
-
-        # key = title, value = [picture_link, news_url]
+        ### for example
         example = {}
-        if self.test % 2 == 1:
-            example['肺炎疫情：分析中美背後的政治角力'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/DBE1/production/_111398265_673d94a6-cb9b-4a33-a2a6-67940b35aff4.jpg','https://www.bbc.com/zhongwen/trad/world-52016078']
-            example['英國王儲查爾斯王子確診感染新冠病毒 「症狀輕微」'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/95E3/production/_111417383_5d7748e8-87bd-458a-baef-af40d207d905.jpg', 'https://www.bbc.com/zhongwen/trad/uk-52034402']
-            example['肺炎疫情：無症狀感染者是否會導致第二次大爆發'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/0E99/production/_110873730_p0831myp.jpg','https://www.bbc.com/zhongwen/trad/chinese-news-52016649']
-            example['肺炎疫情：印度13億人口「宵禁」21天，全球最大規模封國面臨的挑戰'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/F604/production/_111408926_gettyimages-1208075838.jpg', 'https://www.bbc.com/zhongwen/trad/world-52031681']
-            example['肺炎疫情：特朗普冀復活節美國恢復正常'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/5989/production/_111412922_hi060717157.jpg', 'https://www.bbc.com/zhongwen/trad/world-52032689']
-            example['肺炎疫情：特朗普從堅稱「中國病毒」到表態「不是美國亞裔的錯」'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/8D6D/production/_111050263_gettyimages-1205108047.jpg', 'https://www.bbc.com/zhongwen/trad/world-52027635']
-            example['肺炎疫情：居家隔離如何鍛煉和保持最佳狀態'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/BF8D/production/_111373094_070cb94f-a4b7-424c-8477-99259708e66d.jpg', 'https://www.bbc.com/zhongwen/trad/world-51977605']
-        else:
-            example['肺炎疫情：分析中美背後的政治角力'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/DBE1/production/_111398265_673d94a6-cb9b-4a33-a2a6-67940b35aff4.jpg','https://www.bbc.com/zhongwen/trad/world-52016078']
-            example['英國王儲查爾斯王子確診感染新冠病毒 「症狀輕微」'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/95E3/production/_111417383_5d7748e8-87bd-458a-baef-af40d207d905.jpg','https://www.bbc.com/zhongwen/trad/uk-52034402']
-            example['肺炎疫情：無症狀感染者是否會導致第二次大爆發'] = ['https://ichef.bbci.co.uk/news/660/cpsprodpb/0E99/production/_110873730_p0831myp.jpg','https://www.bbc.com/zhongwen/trad/chinese-news-52016649']
+        example['肺炎疫情：中國造新冠病毒測試盒為何在歐洲遭遇質量質疑'] = ["./picture/_111481192_whatsubject.jpg",
+                                                 "https://www.bbc.com/zhongwen/trad/world-52102670"]
+        example['習近平到訪浙江力推復工 全球需求仍陷停滯'] = ['./picture/_111481964_3.xinhua.jpg',
+                                           'https://www.bbc.com/zhongwen/trad/chinese-news-52103506']
+        example['肺炎疫情：為什麼印度全國封鎖後數百萬人走路回家'] = ['./picture/_111467867_gettyimages-1208531019.jpg',
+                                              'https://www.bbc.com/zhongwen/trad/world-52103978']
+        example['肺炎疫情：這場危機映照出的美國和美國總統'] = ['./picture/_111411989_mask_nyc_976getty.jpg',
+                                           'https://www.bbc.com/zhongwen/trad/world-52082393']
+        returnData = example
+        ###
 
-        self.test += 1
-        return example
+        for key, values in returnData.items():
+            Ui_MainWindow.webImageDict[values[0]] = QtGui.QPixmap(QtGui.QImage(self.curPath + values[0][1:]).smoothScaled(400, 300))
 
     def Clicked_label_bbc_logo(self, event):
         QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://www.bbc.com/'))
@@ -179,6 +158,14 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    ui.UpdateNews()
+    # print(ui.webImageDict)
+    example = {}
+    example['肺炎疫情：中國造新冠病毒測試盒為何在歐洲遭遇質量質疑'] = ["./picture/_111481192_whatsubject.jpg", "https://www.bbc.com/zhongwen/trad/world-52102670"]
+    example['習近平到訪浙江力推復工 全球需求仍陷停滯'] = ['./picture/_111481964_3.xinhua.jpg','https://www.bbc.com/zhongwen/trad/chinese-news-52103506']
+    example['肺炎疫情：為什麼印度全國封鎖後數百萬人走路回家'] = ['./picture/_111467867_gettyimages-1208531019.jpg','https://www.bbc.com/zhongwen/trad/world-52103978']
+    example['肺炎疫情：這場危機映照出的美國和美國總統'] = ['./picture/_111411989_mask_nyc_976getty.jpg','https://www.bbc.com/zhongwen/trad/world-52082393']
+
+
+    ui.UpdateNews(example)
     MainWindow.show()
     sys.exit(app.exec_())

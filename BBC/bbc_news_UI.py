@@ -44,7 +44,7 @@ class MyGroupBox(QtWidgets.QGroupBox):
 
         # set Picture
         if self.picture_link not in Ui_MainWindow.webImageDict:
-            Ui_MainWindow.webImageDict[self.picture_link] = QtGui.QPixmap(QtGui.QImage(Ui_MainWindow.curPath + self.picture_link[1:]).smoothScaled(300,225))
+            Ui_MainWindow.webImageDict[self.picture_link] = QtGui.QPixmap(QtGui.QImage(self.picture_link).smoothScaled(300,225))
         self.picture.setPixmap(Ui_MainWindow.webImageDict[self.picture_link])
 
         # set title style
@@ -120,24 +120,13 @@ class Ui_MainWindow(object):
             i += 1
 
     def PreLoad(self):
-        with open(self.curPath+'/src/data.json', 'r') as f:
-            returnData = json.load(f)
+        import os
+        if os.path.exists(self.curPath + "/src/data.json"):
+            with open(self.curPath+'/src/data.json', 'r') as f:
+                returnData = json.load(f)
 
-        ### for example
-        example = {}
-        example['肺炎疫情：中國造新冠病毒測試盒為何在歐洲遭遇質量質疑'] = ["./picture/_111481192_whatsubject.jpg",
-                                                 "https://www.bbc.com/zhongwen/trad/world-52102670"]
-        example['習近平到訪浙江力推復工 全球需求仍陷停滯'] = ['./picture/_111481964_3.xinhua.jpg',
-                                           'https://www.bbc.com/zhongwen/trad/chinese-news-52103506']
-        example['肺炎疫情：為什麼印度全國封鎖後數百萬人走路回家'] = ['./picture/_111467867_gettyimages-1208531019.jpg',
-                                              'https://www.bbc.com/zhongwen/trad/world-52103978']
-        example['肺炎疫情：這場危機映照出的美國和美國總統'] = ['./picture/_111411989_mask_nyc_976getty.jpg',
-                                           'https://www.bbc.com/zhongwen/trad/world-52082393']
-        returnData = example
-        ###
-
-        for key, values in returnData.items():
-            Ui_MainWindow.webImageDict[values[0]] = QtGui.QPixmap(QtGui.QImage(self.curPath + values[0][1:]).smoothScaled(400, 300))
+            for key, values in returnData.items():
+                Ui_MainWindow.webImageDict[values[0]] = QtGui.QPixmap(QtGui.QImage(values[0]).smoothScaled(300, 225))
 
     def Clicked_label_bbc_logo(self, event):
         QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://www.bbc.com/'))
@@ -150,22 +139,3 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "BBC News"))
         self.pushButton_go_back.setText(_translate("MainWindow", "回首頁"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    # print(ui.webImageDict)
-    example = {}
-    example['肺炎疫情：中國造新冠病毒測試盒為何在歐洲遭遇質量質疑'] = ["./picture/_111481192_whatsubject.jpg", "https://www.bbc.com/zhongwen/trad/world-52102670"]
-    example['習近平到訪浙江力推復工 全球需求仍陷停滯'] = ['./picture/_111481964_3.xinhua.jpg','https://www.bbc.com/zhongwen/trad/chinese-news-52103506']
-    example['肺炎疫情：為什麼印度全國封鎖後數百萬人走路回家'] = ['./picture/_111467867_gettyimages-1208531019.jpg','https://www.bbc.com/zhongwen/trad/world-52103978']
-    example['肺炎疫情：這場危機映照出的美國和美國總統'] = ['./picture/_111411989_mask_nyc_976getty.jpg','https://www.bbc.com/zhongwen/trad/world-52082393']
-
-
-    ui.UpdateNews(example)
-    MainWindow.show()
-    sys.exit(app.exec_())

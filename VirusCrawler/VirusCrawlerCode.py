@@ -4,10 +4,13 @@ import time
 import json
 from selenium import webdriver
 from urllib.request import urlopen
+
+#browser = webdriver.Chrome(executable_path='C:\Code\VirusCrawler\venv\Lib\site-packages\selenium\webdriver\remote\chromedriver.exe')
 def crawler():
     option = webdriver.ChromeOptions()									#設定selenium browser 為chorme
     option.headless = True										#設定不顯示視窗
-    browser = webdriver.Chrome(options=option)
+#    browser = webdriver.Chrome(executable_path='C:\Code\VirusCrawler\venv\Lib\site-packages\selenium\webdriver\remote\chromedriver.exe')
+    browser = webdriver.Chrome(executable_path='C:\Code\VirusCrawler\venv\Lib\site-packages\selenium\webdriver\remote\chromedriver.exe',options=option)
     url = "https://www.taoyuan-airport.com/main_ch/revised_flight.aspx?uid=159&pid=12"			#桃機網站url
     browser.get(url)
     time.sleep(3)											#等待網頁加載完成

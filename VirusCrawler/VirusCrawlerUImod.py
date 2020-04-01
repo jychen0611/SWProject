@@ -1,12 +1,17 @@
+from __future__ import unicode_literals
 from PyQt5 import QtCore, QtGui, QtWidgets
+import bs4
+import time
+from selenium import webdriver
+from urllib.request import urlopen
 from VirusCrawlerUI import Ui_Flight
-#from VirusCrawlerCode import crawler
+from VirusCrawlerCode import crawler
 import json
-
 
 class Flight(QtWidgets.QMainWindow):
     def __init__(self):
         super(Flight, self).__init__()
+#        self.driver = webdriver.Chrome(executable_path='C:\Code\VirusCrawler\venv\Lib\site-packages\selenium\webdriver\remote\chromedriver.exe')
         json_file = open("C:\Code\VirusCrawler\jsonfiles\TestData", "r", encoding='utf-8')
         self.FData = json.load(json_file)
         print(self.FData["Flight1"][0])
@@ -24,38 +29,29 @@ class Flight(QtWidgets.QMainWindow):
             for j in range(8):
                 self.ui.item = self.ui.flighttable.item(i, j)
                 self.ui.item.setText(_translate("Flight", self.FData["Flight"+str(i)][j]))
-#        self.ui.item = self.ui.flighttable.item(0, 1)
-#        self.ui.item.setText(_translate("Flight", self.FData["Flight1"][1]))
-#        self.ui.item = self.ui.flighttable.item(0, 2)
-#        self.ui.item.setText(_translate("Flight", self.FData["Flight1"][2]))
-#        self.ui.item = self.ui.flighttable.item(1, 0)
-#        self.ui.item.setText(_translate("Flight", self.FData["Flight2"][0]))
-#        self.ui.item = self.ui.flighttable.item(1, 1)
-#        self.ui.item.setText(_translate("Flight", self.FData["Flight2"][1]))
-#        self.ui.item = self.ui.flighttable.item(1, 2)
-#        self.ui.item.setText(_translate("Flight", self.FData["Flight2"][2]))
-#        self.ui.flighttable.itemActivated.connect(Flight.itemActivated_event)
 
-#       item = self.flighttable.item(1, 3)
-#       item.setText(_translate("Flight", "Canceled"))
-#       item = self.flighttable.item(0, 0)
-#       item.setText(_translate("Flight", "AS164"))
-#       item = self.flighttable.item(0, 1)
-#       item.setText(_translate("Flight", "AirAsia"))
-#       item = self.flighttable.item(0, 2)
-#       item.setText(_translate("Flight", "14:00"))
-#       item = self.flighttable.item(0, 3)
-#       item.setText(_translate("Flight", "Late"))
-    def itemActivated_event(item):
-        json_file = open("C:\Code\VirusCrawler\jsonfiles\FlightUrl","r")
-        Flight.FData = json.load(json_file)
-#       print(Flight.FData["Flight0"][0])
-        json_file.close()
-        if (item.text() == 'China Airline' or item.text() == 'Scoot' or item.text() == 'Air Asia'):
-            QtGui.QDesktopServices.openUrl(QtCore.QUrl(Flight.FData[item.text()]))
-        else:
-            print(item.text())
+        self.ui.flighttable.itemActivated.connect(itemActivated_event)
+ #       self.ui.search.clicked.connect(self.handleButton)   #search button ( not completed
 
+def itemActivated_event(item):
+    json_file = open("C:\Code\VirusCrawler\jsonfiles\FlightUrl","r",encoding='utf-8')
+    Flight.FData = json.load(json_file)
+#    print(Flight.FData["中華航空"])
+    json_file.close()
+    if item.text() == '亞州航空' or item.text() == '中華航空' or item.text() == '馬來西亞':
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl(Flight.FData[item.text()]))
+    else:
+        print(item.text())
+
+#    def handleButton(self):     # search function (not completed
+#        items = self.ui.flighttable.findItems(self.ui.edit.text(), QtCore.Qt.MatchExactly)
+#        if items:
+#            results = '\n'.join(
+#                'row %d column %d' % (item.row() + 1, item.column() + 1)
+#                for item in items)
+#        else:
+#            results = 'Found Nothing'
+#        QtGui.QMessageBox.information(self, 'Search Results', results)
 
 if __name__ == "__main__":
     import sys

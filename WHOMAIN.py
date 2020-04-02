@@ -40,7 +40,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.actionClose.setShortcut('Esc')
         self.ui.actionClose.triggered.connect(app.exit)
         # 設定ComboBox
-      #  choices = ['全球','Taiwan','USA','China','Japan']
+      #  choices = ['','病例數','死亡人數','痊癒人數']
       #  self.ui.comboBox.addItems(choices)
       #  self.ui.comboBox.currentIndexChanged.connect(self.display)
       #  self.display()
@@ -51,8 +51,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.font.setBold(True)  # 设置字体加粗
 
         self.ui.tableWidget.setColumnCount(10)
-        self.ui.tableWidget.setRowCount(200)
-        self.ui.tableWidget.setHorizontalHeaderLabels(['國家', '感染人數', '死亡人數','痊癒人數','感染新增','死亡新增','Active cases','重症','',''])  # 设置表头文字
+        self.ui.tableWidget.setRowCount(250)
+        self.ui.tableWidget.setHorizontalHeaderLabels(['國家', '感染人數', '死亡人數','痊癒人數','感染新增','死亡新增','Active cases','重症','TotCases1M','TotDeaths1M'])  # 设置表头文字
         self.ui.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         """
         # 讀取Txt檔
@@ -113,24 +113,27 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 設定字大小
         self.ui.label.setFont(QtGui.QFont('標楷體',30))
-      #  self.ui.label_2.setFont(QtGui.QFont('標楷體', 10))
+       # self.ui.label_2.setFont(QtGui.QFont('標楷體', 25))
         self.ui.label_3.setFont(QtGui.QFont('標楷體', 25))
-        self.ui.pushButton_3.setFont(QtGui.QFont('標楷體', 20))
+        self.ui.pushButton_3.setFont(QtGui.QFont('標楷體', 25))
         self.ui.pushButton_2.setFont(QtGui.QFont('標楷體', 30))
         self.ui.pushButton.setFont(QtGui.QFont('標楷體', 25))
 
         pixmap = QPixmap("D:\PYQT\德賽.jpg")  # 按指定路径找到图片，注意路径必须用双引号包围，不能用单引号
         self.ui.label.setPixmap(pixmap)
-      #  self.ui.label_2.setText('請選擇想查詢的位置')
+       # self.ui.label_2.setText('台灣目前的')
         self.ui.label_3.setText('COVID-19 Situation Table')
+        self.ui.pushButton_3.setText('台灣目前狀態')
         self.ui.pushButton_2.setText('回首頁')
         self.ui.pushButton.setText("刷新")
-        self.ui.pushButton_3.setText('WebCrawler')
 
 
+        # 連接按鈕與爬蟲功能
+        self.ui.pushButton.clicked.connect(self.Web_Crawler)
+        #連接按鈕與刷新功能
         self.ui.pushButton.clicked.connect(self.Reset)
-#連接按鈕與爬蟲功能
-        self.ui.pushButton_3.clicked.connect(self.Web_Crawler)
+        #台灣狀態
+        self.ui.pushButton_3.clicked.connect(self.buttonClicked)
 
     def Web_Crawler(empty1,empty2):
         Total_case = open('Coronavirus_Cases.txt', 'wt', encoding="utf-8")
@@ -225,7 +228,7 @@ class MainWindow(QtWidgets.QMainWindow):
         TotCases1M.close()
         TotDeaths1M.close()
 
-    #Web_Crawler()
+
 
 
 
@@ -285,27 +288,16 @@ class MainWindow(QtWidgets.QMainWindow):
                 b = b + 1
 
     def buttonClicked(self):
+        self.ui.label.setText(' 感染人數:\n 死亡人數:\n 痊癒人數: ')
 
-        self.ui.label.setText('示意圖')
-        number =0
-        self.ui.lcdNumber.display(number)
-        self.ui.label_3.setText('COVID-19 Situation Table')
+
 
     def display(self):
-        self.ui.label_3.setText('%s目前病例數為:'%self.ui.comboBox.currentText())
-        pixmap = QPixmap("德賽.jpg")  # 按指定路径找到图片，注意路径必须用双引号包围，不能用单引号
-        self.ui.label.setPixmap(pixmap)
-        if self.ui.comboBox.currentText()=='Taiwan':
-            number=195
-        elif self.ui.comboBox.currentText()=='China':
-            number=81116
-        elif self.ui.comboBox.currentText()=='Japan':
-            number=1111
-        elif self.ui.comboBox.currentText()=='USA':
-            number=35226
-        else:
-            number=99999
-        self.ui.lcdNumber.display(number)
+
+        with open('TotalCases.txt', 'r', encoding='utf-8') as file:
+           for  TotalCases in file:
+                self.ui.label.setText('%s  '  % TotalCases)
+
 
 
 

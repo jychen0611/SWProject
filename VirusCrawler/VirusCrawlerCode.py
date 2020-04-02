@@ -61,7 +61,7 @@ def crawler():
             if count == 100:                            #收集 100 筆 flight_info
                 break
     flight_info_jason = json.dumps(flight_info, ensure_ascii=False, separators=(',', ': '))
-    print(flight_info_jason)
+    print(flight_info_jason)							#印出所有航班資訊(非必要)
     with open('fi_out.json', 'w') as file:
         file.write(flight_info_jason)                   #輸出航班資訊的json
     tEnd = time.time()

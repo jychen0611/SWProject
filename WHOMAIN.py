@@ -8,6 +8,8 @@ import json
 import sys
 import random
 number=0
+tTotalcases='0'
+
 class MainWindow(QtWidgets.QMainWindow):
 
     """
@@ -115,7 +117,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.label.setFont(QtGui.QFont('標楷體',30))
        # self.ui.label_2.setFont(QtGui.QFont('標楷體', 25))
         self.ui.label_3.setFont(QtGui.QFont('標楷體', 25))
-        self.ui.pushButton_3.setFont(QtGui.QFont('標楷體', 25))
+        #self.ui.pushButton_3.setFont(QtGui.QFont('標楷體', 25))
         self.ui.pushButton_2.setFont(QtGui.QFont('標楷體', 30))
         self.ui.pushButton.setFont(QtGui.QFont('標楷體', 25))
 
@@ -123,7 +125,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.label.setPixmap(pixmap)
        # self.ui.label_2.setText('台灣目前的')
         self.ui.label_3.setText('COVID-19 Situation Table')
-        self.ui.pushButton_3.setText('台灣目前狀態')
+        #self.ui.pushButton_3.setText('台灣目前狀態')
         self.ui.pushButton_2.setText('回首頁')
         self.ui.pushButton.setText("刷新")
 
@@ -133,9 +135,9 @@ class MainWindow(QtWidgets.QMainWindow):
         #連接按鈕與刷新功能
         self.ui.pushButton.clicked.connect(self.Reset)
         #台灣狀態
-        self.ui.pushButton_3.clicked.connect(self.buttonClicked)
+        #self.ui.pushButton_3.clicked.connect(self.buttonClicked)
 
-    def Web_Crawler(empty1,empty2):
+    def Web_Crawler(empty):
         Total_case = open('Coronavirus_Cases.txt', 'wt', encoding="utf-8")
         Countries_two = open('Countries.txt', 'wt', encoding="utf-8")
         TotalCases = open('TotalCases.txt', 'wt', encoding="utf-8")
@@ -169,7 +171,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         china = []
         for i in range(9):
-            china.append(str(Main[2201 + i].string))
+            china.append(str(Main[(int)(len(Main) / 2) - 19 + i].string))
         china_num = china[0].split(',')
 
         Count = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -191,8 +193,10 @@ class MainWindow(QtWidgets.QMainWindow):
                         check = 1
                         check_re = 1
                         break
+                    elif int(china_num[i]) < int(country_num[i]):
+                        break
             if check == 1:
-                Countries_two.write("china" + "\n")
+                Countries_two.write("China" + "\n")
                 TotalCases.write(china[0] + "\n")
                 NewCases.write(china[1] + "\n")
                 TotalDeaths.write(china[2] + "\n")
@@ -213,8 +217,8 @@ class MainWindow(QtWidgets.QMainWindow):
             SeriousCritical.write(str(Main[Count[7]].string) + "\n")
             TotCases1M.write(str(Main[Count[8]].string) + "\n")
             TotDeaths1M.write(str(Main[Count[9]].string) + "\n")
-            for i in range(11):
-                Count[i] = Count[i] + 11
+            for i in range(10):
+                Count[i] = Count[i] + 10
 
         Total_case.close()
         Countries_two.close()
@@ -228,24 +232,27 @@ class MainWindow(QtWidgets.QMainWindow):
         TotCases1M.close()
         TotDeaths1M.close()
 
+    # Web_Crawler()
+
 
 
 
 
     def Reset(self):
         # 讀取Txt檔
+        t = 0
         a = 0
+        tTotalcases ='0'
         with open('Countries.txt', 'r', encoding='utf-8') as file:
             for countries in file:
                 self.ui.tableWidget.setItem(a, 0, QTableWidgetItem(countries))
-                # print(countries)
-                a = a + 1
+                a= a + 1
         b = 0
         with open('TotalCases.txt', 'r', encoding='utf-8') as file:
             for TotalCases in file:
                 self.ui.tableWidget.setItem(b, 1, QTableWidgetItem(TotalCases))
                 b = b + 1
-                print(TotalCases)
+               # print(TotalCases)
         c = 0
         with open('TotalDeaths.txt', 'r', encoding='utf-8') as file:
             for TotalCases in file:
@@ -288,6 +295,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 b = b + 1
 
     def buttonClicked(self):
+       # self.ui.tableWidget.setItem(0, 1, QTableWidgetItem(tTotalCases))
         self.ui.label.setText(' 感染人數:\n 死亡人數:\n 痊癒人數: ')
 
 
